@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -36,44 +35,64 @@
   </div>
 
   <script>
-    const questions = [
-      {
-        q: "面对挑战任务时，你会？",
-        options: [
-          { text: "马上动手执行", type: "tiger" },
-          { text: "鼓舞大家一起做", type: "peacock" },
-          { text: "征询大家意见慢慢来", type: "koala" },
-          { text: "先计划好再行动", type: "owl" }
-        ]
-      },
-      {
-        q: "在小组里你更可能是？",
-        options: [
-          { text: "带头冲锋的人", type: "tiger" },
-          { text: "活跃气氛的人", type: "peacock" },
-          { text: "维系关系的人", type: "koala" },
-          { text: "整理细节的人", type: "owl" }
-        ]
-      },
-      {
-        q: "你更在意：",
-        options: [
-          { text: "成果和效率", type: "tiger" },
-          { text: "氛围和人缘", type: "peacock" },
-          { text: "和谐与安全感", type: "koala" },
-          { text: "准确与逻辑", type: "owl" }
-        ]
-      },
-      {
-        q: "朋友说你最大的特点是？",
-        options: [
-          { text: "强势有主见", type: "tiger" },
-          { text: "风趣能聊", type: "peacock" },
-          { text: "温柔好相处", type: "koala" },
-          { text: "仔细有条理", type: "owl" }
-        ]
-      }
+    const questions = [];
+    const qTexts = [
+      "面对挑战任务时，你会？",
+      "在小组里你更可能是？",
+      "你更在意：",
+      "朋友说你最大的特点是？",
+      "遇到新任务，你通常？",
+      "你更喜欢的工作方式是？",
+      "别人赞美你时，最可能说你？",
+      "你觉得团队最重要的是？",
+      "你处理冲突的方式是？",
+      "你开会时的表现更像是？",
+      "你在做决定时更看重？",
+      "你遇到困难时的反应是？",
+      "你更倾向于？",
+      "别人对你的第一印象是？",
+      "你处理多任务的能力是？",
+      "你喜欢的沟通风格是？",
+      "你最不喜欢的工作氛围是？",
+      "你在团队中的角色更像是？",
+      "你处理压力的方式是？",
+      "你最看重自己什么能力？"
     ];
+
+    const optionMap = [
+      ["马上动手执行", "鼓舞大家一起做", "征询大家意见慢慢来", "先计划好再行动"],
+      ["带头冲锋的人", "活跃气氛的人", "维系关系的人", "整理细节的人"],
+      ["成果和效率", "氛围和人缘", "和谐与安全感", "准确与逻辑"],
+      ["强势有主见", "风趣能聊", "温柔好相处", "仔细有条理"],
+      ["先干了再说", "讲讲愿景吸引人", "看团队氛围再定", "先列清单和步骤"],
+      ["独立完成，效率优先", "和大家一起，轻松快乐", "有熟悉的搭档更好", "计划明确，按流程来"],
+      ["有目标、有执行力", "很有魅力、感染力强", "善解人意", "条理清晰、靠谱"],
+      ["快速行动力", "情绪感染力", "关系协调力", "数据逻辑力"],
+      ["强势控制局面", "缓和气氛", "安抚情绪", "分析问题解决"],
+      ["发言多、推动事情", "积极回应、鼓掌开玩笑", "倾听安静", "总结记录"],
+      ["结果和价值", "情感和共鸣", "关系和稳定", "流程和逻辑"],
+      ["寻找新路径解决", "激励自己走出来", "找朋友倾诉", "冷静思考分析"],
+      ["主导场面", "带动气氛", "稳定支持", "提供方案"],
+      ["自信有气场", "有趣外向", "友好亲切", "严谨理性"],
+      ["快速切换", "边玩边做", "跟着节奏走", "逐项拆解执行"],
+      ["直来直去", "轻松愉快", "温和理解", "精准简洁"],
+      ["混乱无序", "没有交流", "冷漠压迫", "没有逻辑"],
+      ["领头羊", "气氛组", "情绪稳定器", "方案师"],
+      ["转移注意、干就完了", "找乐子缓解", "和熟人聊聊", "分析原因对症"],
+      ["决断力", "影响力", "亲和力", "思考力"]
+    ];
+
+    for (let i = 0; i < 20; i++) {
+      questions.push({
+        q: qTexts[i],
+        options: [
+          { text: optionMap[i][0], type: "tiger" },
+          { text: optionMap[i][1], type: "peacock" },
+          { text: optionMap[i][2], type: "koala" },
+          { text: optionMap[i][3], type: "owl" }
+        ]
+      });
+    }
 
     const resultMap = {
       tiger: "🐯 老虎型：果断强势，目标导向，适合做领导和决策者。沟通建议：简洁直接、快节奏。",
@@ -123,8 +142,10 @@
     function showResult() {
       questionContainer.style.display = "none";
       resultContainer.style.display = "block";
-      const maxType = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-      resultText.textContent = resultMap[maxType];
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const topType = sorted[0][0];
+      const secondType = sorted[1][0];
+      resultText.innerHTML = `${resultMap[topType]}<br><br>其次性格：${resultMap[secondType]}`;
     }
 
     restartBtn.onclick = () => window.location.reload();
